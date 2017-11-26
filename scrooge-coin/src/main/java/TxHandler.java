@@ -30,6 +30,9 @@ public class TxHandler {
         for (int i = 0; i < tx.numInputs(); i++) {
 
             final Transaction.Input input = tx.getInput(i);
+            if (Objects.isNull(input.prevTxHash)) {
+                return false;
+            }
             final UTXO txUtxo = new UTXO(input.prevTxHash, input.outputIndex);
 
             // check 3 - no UTXO is claimed multiple times
@@ -38,16 +41,16 @@ public class TxHandler {
             }
             utxoSet.add(txUtxo);
 
-            final Transaction.Output prevTx = pool.getTxOutput(txUtxo);
+            final Transaction.Output prevTxOutput = pool.getTxOutput(txUtxo);
             // check 1 - all output claimed by tx are in current UTXO pool
             if (!pool.contains(txUtxo)) {
                 return false;
             }
             // check 2 - signatures of each input are valid
-            if (input.signature == null || !Crypto.verifySignature(prevTx.address, tx.getRawDataToSign(i), input.signature)) {
+            if (input.signature == null || !Crypto.verifySignature(prevTxOutput.address, tx.getRawDataToSign(i), input.signature)) {
                 return false;
             }
-            inputSum += prevTx.value;
+            inputSum += prevTxOutput.value;
         }
 
         // check 4 - non negative output values
