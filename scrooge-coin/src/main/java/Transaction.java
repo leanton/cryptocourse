@@ -1,5 +1,3 @@
-package me.antonle.crypto.scrooge;
-
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,13 +9,13 @@ public class Transaction {
 
     public class Input {
         /**
-         * hash of the me.antonle.crypto.scrooge.Transaction whose output is being used
+         * hash of the Transaction whose output is being used
          */
-        public byte[] prevTxHash;
+        public final byte[] prevTxHash;
         /**
          * used output's index in the previous transaction
          */
-        public int outputIndex;
+        public final int outputIndex;
         /**
          * the signature produced to check validity
          */
@@ -43,11 +41,11 @@ public class Transaction {
         /**
          * value in bitcoins of the output
          */
-        public double value;
+        public final double value;
         /**
          * the address or public key of the recipient
          */
-        public PublicKey address;
+        public final PublicKey address;
 
         public Output(double v, PublicKey addr) {
             value = v;
@@ -63,14 +61,14 @@ public class Transaction {
     private ArrayList<Output> outputs;
 
     public Transaction() {
-        inputs = new ArrayList<Input>();
-        outputs = new ArrayList<Output>();
+        inputs = new ArrayList<>();
+        outputs = new ArrayList<>();
     }
 
     public Transaction(Transaction tx) {
         hash = tx.hash.clone();
-        inputs = new ArrayList<Input>(tx.inputs);
-        outputs = new ArrayList<Output>(tx.outputs);
+        inputs = new ArrayList<>(tx.inputs);
+        outputs = new ArrayList<>(tx.outputs);
     }
 
     public void addInput(byte[] prevTxHash, int outputIndex) {

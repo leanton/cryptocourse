@@ -1,5 +1,3 @@
-package me.antonle.crypto.scrooge;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -11,35 +9,35 @@ public class UTXOPool {
     private HashMap<UTXO, Transaction.Output> H;
 
     /**
-     * Creates a new empty me.antonle.crypto.scrooge.UTXOPool
+     * Creates a new empty UTXOPool
      */
     public UTXOPool() {
         H = new HashMap<>();
     }
 
     /**
-     * Creates a new me.antonle.crypto.scrooge.UTXOPool that is a copy of {@code uPool}
+     * Creates a new UTXOPool that is a copy of {@code uPool}
      */
     public UTXOPool(UTXOPool uPool) {
         H = new HashMap<>(uPool.H);
     }
 
     /**
-     * Adds a mapping from me.antonle.crypto.scrooge.UTXO {@code utxo} to transaction output @code{txOut} to the pool
+     * Adds a mapping from UTXO {@code utxo} to transaction output @code{txOut} to the pool
      */
     public void addUTXO(UTXO utxo, Transaction.Output txOut) {
         H.put(utxo, txOut);
     }
 
     /**
-     * Removes the me.antonle.crypto.scrooge.UTXO {@code utxo} from the pool
+     * Removes the UTXO {@code utxo} from the pool
      */
     public void removeUTXO(UTXO utxo) {
         H.remove(utxo);
     }
 
     /**
-     * @return the transaction output corresponding to me.antonle.crypto.scrooge.UTXO {@code utxo}, or null if {@code utxo} is
+     * @return the transaction output corresponding to UTXO {@code utxo}, or null if {@code utxo} is
      * not in the pool.
      */
     public Transaction.Output getTxOutput(UTXO ut) {
@@ -47,7 +45,7 @@ public class UTXOPool {
     }
 
     /**
-     * @return true if me.antonle.crypto.scrooge.UTXO {@code utxo} is in the pool and false otherwise
+     * @return true if UTXO {@code utxo} is in the pool and false otherwise
      */
     public boolean contains(UTXO utxo) {
         return H.containsKey(utxo);

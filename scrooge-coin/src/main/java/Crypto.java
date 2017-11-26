@@ -1,5 +1,3 @@
-package me.antonle.crypto.scrooge;
-
 import java.security.*;
 
 public class Crypto {

@@ -1,5 +1,3 @@
-package me.antonle.crypto.scrooge;
-
 import java.util.Arrays;
 
 public class UTXO implements Comparable<UTXO> {
@@ -15,7 +13,7 @@ public class UTXO implements Comparable<UTXO> {
     private int index;
 
     /**
-     * Creates a new me.antonle.crypto.scrooge.UTXO corresponding to the output with index <index> in the transaction whose
+     * Creates a UTXO corresponding to the output with index <index> in the transaction whose
      * hash is {@code txHash}
      */
     public UTXO(byte[] txHash, int index) {
@@ -24,21 +22,21 @@ public class UTXO implements Comparable<UTXO> {
     }
 
     /**
-     * @return the transaction hash of this me.antonle.crypto.scrooge.UTXO
+     * @return the transaction hash of this UTXO
      */
     public byte[] getTxHash() {
         return txHash;
     }
 
     /**
-     * @return the index of this me.antonle.crypto.scrooge.UTXO
+     * @return the index of this UTXO
      */
     public int getIndex() {
         return index;
     }
 
     /**
-     * Compares this me.antonle.crypto.scrooge.UTXO to the one specified by {@code other}, considering them equal if they have
+     * Compares this UTXO to the one specified by {@code other}, considering them equal if they have
      * {@code txHash} arrays with equal contents and equal {@code index} values
      */
     public boolean equals(Object other) {
@@ -62,7 +60,7 @@ public class UTXO implements Comparable<UTXO> {
     }
 
     /**
-     * Simple implementation of a me.antonle.crypto.scrooge.UTXO hashCode that respects equality of UTXOs // (i.e.
+     * Simple implementation of a UTXO hashCode that respects equality of UTXOs // (i.e.
      * utxo1.equals(utxo2) => utxo1.hashCode() == utxo2.hashCode())
      */
     public int hashCode() {
@@ -73,7 +71,7 @@ public class UTXO implements Comparable<UTXO> {
     }
 
     /**
-     * Compares this me.antonle.crypto.scrooge.UTXO to the one specified by {@code utxo}
+     * Compares this UTXO to the one specified by {@code utxo}
      */
     public int compareTo(UTXO utxo) {
         byte[] hash = utxo.txHash;
