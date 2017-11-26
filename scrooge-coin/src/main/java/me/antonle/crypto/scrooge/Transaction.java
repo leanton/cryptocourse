@@ -10,11 +10,17 @@ import java.security.PublicKey;
 public class Transaction {
 
     public class Input {
-        /** hash of the me.antonle.crypto.scrooge.Transaction whose output is being used */
+        /**
+         * hash of the me.antonle.crypto.scrooge.Transaction whose output is being used
+         */
         public byte[] prevTxHash;
-        /** used output's index in the previous transaction */
+        /**
+         * used output's index in the previous transaction
+         */
         public int outputIndex;
-        /** the signature produced to check validity */
+        /**
+         * the signature produced to check validity
+         */
         public byte[] signature;
 
         public Input(byte[] prevHash, int index) {
@@ -34,9 +40,13 @@ public class Transaction {
     }
 
     public class Output {
-        /** value in bitcoins of the output */
+        /**
+         * value in bitcoins of the output
+         */
         public double value;
-        /** the address or public key of the recipient */
+        /**
+         * the address or public key of the recipient
+         */
         public PublicKey address;
 
         public Output(double v, PublicKey addr) {
@@ -45,7 +55,9 @@ public class Transaction {
         }
     }
 
-    /** hash of the transaction, its unique id */
+    /**
+     * hash of the transaction, its unique id
+     */
     private byte[] hash;
     private ArrayList<Input> inputs;
     private ArrayList<Output> outputs;
