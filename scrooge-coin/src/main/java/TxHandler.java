@@ -1,7 +1,5 @@
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.IntStream;
 
 public class TxHandler {
 
@@ -29,7 +27,7 @@ public class TxHandler {
     public boolean isValidTx(Transaction tx) {
         Set<UTXO> utxoSet = new HashSet<>();
         double inputSum = 0;
-        for (int i = 0; i < tx.getInputs().size(); i++) {
+        for (int i = 0; i < tx.numInputs(); i++) {
 
             final Transaction.Input input = tx.getInput(i);
             final UTXO txUtxo = new UTXO(input.prevTxHash, input.outputIndex);
@@ -69,28 +67,35 @@ public class TxHandler {
      * updating the current UTXO pool as appropriate.
      */
     public Transaction[] handleTxs(Transaction[] possibleTxs) {
-        List<Transaction> transactions = new ArrayList<>();
+        return Arrays.stream(possibleTxs)
+                .filter(this::isValidTx)
+                .map(this::removeInputs)
+                .map(this::addOutputs)
+                .toArray(Transaction[]::new);
+    }
 
-        for (Transaction transaction : possibleTxs) {
-            if (isValidTx(transaction)) {
-                transactions.add(transaction);
+    private Transaction addOutputs(Transaction transaction) {
+        IntStream.range(0, transaction.numOutputs())
+                .mapToObj(i -> new Tuple(transaction, i))
+                .forEach(tuple -> pool.addUTXO(tuple.utxo, tuple.output));
+        return transaction;
+    }
 
-                // do i need to delete all the utxo with signature prevTxHash?
-                for (int i = 0; i < transaction.getInputs().size(); i++) {
-                    final Transaction.Input input = transaction.getInput(i);
-                    pool.removeUTXO(new UTXO(input.prevTxHash, input.outputIndex));
-                }
+    private Transaction removeInputs(Transaction transaction) {
+        transaction.getInputs().stream()
+                .map(input -> new UTXO(input.prevTxHash, input.outputIndex))
+                .forEach(pool::removeUTXO);
+        return transaction;
+    }
 
-                for (int i = 0; i < transaction.getOutputs().size(); i++) {
-                    final UTXO utxo = new UTXO(transaction.getHash(), i);
-                    final Transaction.Output output = transaction.getOutput(i);
-                    pool.addUTXO(utxo, output);
-                }
-            }
+    private static class Tuple {
+        final UTXO utxo;
+        final Transaction.Output output;
+
+        Tuple(Transaction txn, int index) {
+            this.utxo = new UTXO(txn.getHash(), index);
+            this.output = txn.getOutput(index);
         }
-
-        final Transaction[] result = new Transaction[transactions.size()];
-        return transactions.toArray(result);
     }
 
 }
