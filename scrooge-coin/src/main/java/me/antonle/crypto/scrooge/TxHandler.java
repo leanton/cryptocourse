@@ -8,7 +8,8 @@ public class TxHandler {
      * constructor.
      */
     public TxHandler(UTXOPool utxoPool) {
-        // IMPLEMENT THIS
+        // TODO: IMPLEMENT THIS
+        throw new RuntimeException("Not implemented");
     }
 
     /**
@@ -21,7 +22,8 @@ public class TxHandler {
      *     values; and false otherwise.
      */
     public boolean isValidTx(Transaction tx) {
-        // IMPLEMENT THIS
+        // TODO: IMPLEMENT THIS
+        throw new RuntimeException("Not implemented");
     }
 
     /**
@@ -30,7 +32,8 @@ public class TxHandler {
      * updating the current me.antonle.crypto.scrooge.UTXO pool as appropriate.
      */
     public Transaction[] handleTxs(Transaction[] possibleTxs) {
-        // IMPLEMENT THIS
+        // TODO: IMPLEMENT THIS
+        throw new RuntimeException("Not implemented");
     }
 
 }
